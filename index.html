@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>PTIC GAME: The Drunker Number</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+  <script type="text/javascript" charset="utf-8">
+    var pad_start = 0;
+    var pad_stop = 99;
+    var target = Math.floor(Math.random() * 100);
+    var current_selected = 0;
+    function timerCheck(valselect) {
+      //$("#pad-btn-" + valselect).addClass("btn-txt-size");
+      //$("#contain-" + valselect).addClass("rainbow");
+      $("#mega-display").html("");
+      $("#mega-display").append('<div class="rainbow">'+valselect+'</div>');
+      $("#mega-display").addClass("mega-show");
+      current_selected = valselect;
+      setTimeout(disable_numpad, 5000);
+      //<div class="rainbow">30</div>
+    }
+
+    function disable_numpad() {
+      
+      console.log(current_selected);
+      console.log('disable numpad call');
+      var select = parseInt(current_selected);
+      console.log(select + ' | ' + target);
+
+      if (target == select) {
+        Swal.fire(
+          select.toString(),
+          'You get Lucky Number!',
+          'success'
+        ).then((result) => {
+          window.location.reload();
+          /* Read more about isConfirmed, isDenied below 
+          
+          if (result.isConfirmed) {
+            Swal.fire('Saved!', '', 'success')
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+          }*/
+        });
+      }
+      else if (select < target) {
+        console.log('select < target');
+        $("#mega-display").removeClass("mega-show");
+        $("#contain-" + select).removeClass("rainbow");
+        $("#pad-btn-" + select).removeClass("btn-txt-size");
+
+        for (var i = select; i >= pad_start; i--) {
+          console.log('disable numpad ' + i);
+          $("#pad-btn-" + i).prop('disabled', true);
+          $("#pad-btn-" + i).css({ 'background-color': '#800000' });     
+        }
+      }
+      else if (select > target) {
+        $("#mega-display").removeClass("mega-show");
+        console.log('select > target');
+        $("#contain-" + select).removeClass("rainbow");
+        $("#pad-btn-" + select).removeClass("btn-txt-size");
+        for (var i = select; i <= pad_stop; i++) {
+          console.log('disable numpad ' + i);
+          $("#pad-btn-" + i).prop('disabled', true);
+          $("#pad-btn-" + i).css({ "background-color": '#800000' });
+        }
+      }
+      else {
+        console.log('disable numpad nothing');
+      }
+    }
+    $(document).ready(function () {
+
+
+      function dispay_numpad() {
+        $("#game-numpad").html("");
+        for (var i = pad_start; i <= pad_stop; i++) {
+          $("#game-numpad").append('<div id="contain-'+i+'" class="contain-btn"><button onclick="timerCheck(' + i + ')" type="button" id="pad-btn-' + i + '" class="btn btn-default btn-block">' + i + '</button></div>');
+        }
+      }
+      dispay_numpad();
+    });
+  </script>
+  <style>
+    .col-xs-1 {
+      background-color: lavender;
+      padding: 1px;
+      height: 100px;
+    }
+    .btn-txt-size{
+      font-size: 10vw;
+    }
+    .contain-btn{
+      margin: 0px;
+      padding: 1px;
+      background-color: darkgrey;
+      width: 10vw;
+      height: 10vh;
+      display: inline-flex;
+    }
+
+    .btn {
+      height: 100%;
+      background-color: #18c01e;
+      font-size: 4vw;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    
+    @keyframes rotate {
+      100% {
+        transform: rotate(1turn);
+      }
+    }
+    
+    .rainbow {
+      position: relative;
+      z-index: 0;
+      width: 50vw;
+      height: 50vh;
+      font-size: 20vw;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 2rem;
+      text-align: center;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        z-index: -2;
+        left: -50%;
+        top: -50%;
+        width: 200%;
+        height: 200%;
+        background-color: #399953;
+        background-repeat: no-repeat;
+        background-size: 50% 50%, 50% 50%;
+        background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+        background-image: linear-gradient(#399953, #399953), linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33), linear-gradient(#377af5, #377af5);
+        animation: rotate 4s linear infinite;
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 6px;
+        top: 6px;
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
+        background: white;
+        border-radius: 5px;
+        animation: opacityChange 3s infinite alternate;
+      }
+    }
+    
+    @keyframes opacityChange {
+      50% {
+        opacity:1;
+      }
+      100% {
+        opacity: .5;
+      }
+    }
+    .mega-display-container{
+      background-color: #fbb300;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+    .mega-show{
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="game-numpad" class="row">
+  </div>
+  <div id="mega-display" class="mega-display-container"></div>
+</body>
+
+</html>
