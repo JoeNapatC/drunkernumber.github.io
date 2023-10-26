@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 
   <script type="text/javascript" charset="utf-8">
     var pad_start = 0;
@@ -16,16 +16,20 @@
     var target = Math.floor(Math.random() * 100);
     var current_selected = 0;
     function timerCheck(valselect) {
-      //$("#pad-btn-" + valselect).addClass("btn-txt-size");
-      //$("#contain-" + valselect).addClass("rainbow");
-      $("#mega-display").html("");
-      $("#mega-display").append('<div class="rainbow">'+valselect+'</div>');
+      $("#mega-display").html('<div class="rainbow">'+valselect+'</div>');
       $("#mega-display").addClass("mega-show");
       current_selected = valselect;
       setTimeout(disable_numpad, 5000);
       //<div class="rainbow">30</div>
     }
 
+    function clearScr(){
+      $("#mega-display").removeClass("mega-show");
+    }
+    function resetGame(){
+      console.log("Call me.....")
+      window.location.reload();
+    }
     function disable_numpad() {
       
       console.log(current_selected);
@@ -34,42 +38,31 @@
       console.log(select + ' | ' + target);
 
       if (target == select) {
-        Swal.fire(
-          select.toString(),
-          'You get Lucky Number!',
-          'success'
-        ).then((result) => {
-          window.location.reload();
-          /* Read more about isConfirmed, isDenied below 
-          
-          if (result.isConfirmed) {
-            Swal.fire('Saved!', '', 'success')
-          } else if (result.isDenied) {
-            Swal.fire('Changes are not saved', '', 'info')
-          }*/
-        });
+        $("#mega-display").html('<div onclick="resetGame()"  class="rainbow change-size"><p>นายแม่นมาก</p><button onclick="resetGame()" style="font-size:2vw !important;">เริ่มเกมใหม่</button></div>');
       }
       else if (select < target) {
         console.log('select < target');
-        $("#mega-display").removeClass("mega-show");
+        $("#mega-display").html('<div class="rainbow change-size">ต่ำเกินไป</div>');
+        setTimeout(clearScr, 5000);        
         $("#contain-" + select).removeClass("rainbow");
         $("#pad-btn-" + select).removeClass("btn-txt-size");
-
+        
         for (var i = select; i >= pad_start; i--) {
           console.log('disable numpad ' + i);
           $("#pad-btn-" + i).prop('disabled', true);
-          $("#pad-btn-" + i).css({ 'background-color': '#800000' });     
+          $("#pad-btn-" + i).css({ 'background-color': 'darkgrey' });     
         }
       }
-      else if (select > target) {
-        $("#mega-display").removeClass("mega-show");
+      else if (select > target) {        
+        $("#mega-display").html('<div class="rainbow change-size">สูงเกินไป</div>');
+        setTimeout(clearScr, 5000);        
         console.log('select > target');
         $("#contain-" + select).removeClass("rainbow");
         $("#pad-btn-" + select).removeClass("btn-txt-size");
         for (var i = select; i <= pad_stop; i++) {
           console.log('disable numpad ' + i);
           $("#pad-btn-" + i).prop('disabled', true);
-          $("#pad-btn-" + i).css({ "background-color": '#800000' });
+          $("#pad-btn-" + i).css({ "background-color": 'darkgrey' });
         }
       }
       else {
@@ -80,7 +73,7 @@
 
 
       function dispay_numpad() {
-        $("#game-numpad").html("");
+        $("#game-numpad").html('<h1 onclick="resetGame()"  style="text-align: center;">The Drunker Number Game</h1>');
         for (var i = pad_start; i <= pad_stop; i++) {
           $("#game-numpad").append('<div id="contain-'+i+'" class="contain-btn"><button onclick="timerCheck(' + i + ')" type="button" id="pad-btn-' + i + '" class="btn btn-default btn-block">' + i + '</button></div>');
         }
@@ -89,27 +82,35 @@
     });
   </script>
   <style>
+    @font-face{
+      font-family:'digital-clock-font';
+      src: url('put_the_location_to_your_font.ttf or .otf');
+     }
     .col-xs-1 {
       background-color: lavender;
-      padding: 1px;
-      height: 100px;
+      padding: 3px;
+      
     }
     .btn-txt-size{
+      font-family: 'Orbitron', sans-serif;
       font-size: 10vw;
     }
     .contain-btn{
+      font-family: 'Orbitron', sans-serif;
       margin: 0px;
-      padding: 1px;
-      background-color: darkgrey;
-      width: 10vw;
-      height: 10vh;
+      padding: 5px;
+      /*background-color: darkgrey;*/
+      width: 9vw;
+      height: 8vh;
       display: inline-flex;
     }
 
     .btn {
+      font-family: 'Orbitron', sans-serif;
       height: 100%;
       background-color: #18c01e;
-      font-size: 4vw;
+      font-size: 2.5vw;
+      border-radius: 5px;
     }
 
     *, *::before, *::after {
@@ -121,9 +122,12 @@
         transform: rotate(1turn);
       }
     }
-    
+    .change-size{
+      font-size: 10vw !important;
+    }
     .rainbow {
       position: relative;
+      font-family: 'Orbitron', sans-serif;
       z-index: 0;
       width: 50vw;
       height: 50vh;
@@ -182,11 +186,25 @@
     .mega-show{
       display: block;
     }
+    .main{
+      margin: 0px;
+      padding: 20px;
+    }
+    .game-numpad{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 90vw;
+      height: 90vh;
+      transform: translate(-50%, -50%);
+    }
   </style>
 </head>
 
 <body>
-  <div id="game-numpad" class="row">
+  <div class="main">    
+    <div id="game-numpad" class="game-numpad">
+  </div>
   </div>
   <div id="mega-display" class="mega-display-container"></div>
 </body>
