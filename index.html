@@ -74,9 +74,17 @@
 
       function dispay_numpad() {
         $("#game-numpad").html('<h1 onclick="resetGame()"  style="text-align: center;">The Drunker Number Game</h1>');
+        const isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
         for (var i = pad_start; i <= pad_stop; i++) {
-          $("#game-numpad").append('<div id="contain-'+i+'" class="contain-btn"><button onclick="timerCheck(' + i + ')" type="button" id="pad-btn-' + i + '" class="btn btn-default btn-block">' + i + '</button></div>');
+          if (isMobile) {
+            $("#game-numpad").append('<div id="contain-'+i+'" class="contain-btn"><button onclick="timerCheck(' + i + ')" type="button" id="pad-btn-' + i + '" class="btn btn-default btn-block mobile">' + i + '</button></div>');
+            //...
+          }
+          else{
+            $("#game-numpad").append('<div id="contain-'+i+'" class="contain-btn"><button onclick="timerCheck(' + i + ')" type="button" id="pad-btn-' + i + '" class="btn btn-default btn-block">' + i + '</button></div>');
+          }
         }
+        
       }
       dispay_numpad();
     });
@@ -125,6 +133,10 @@
     }
     .change-size{
       font-size: 10vw !important;
+    }
+    .mobile{
+      min-width: 40vw;
+      max-hight: 40vw;
     }
     .rainbow {
       position: relative;
