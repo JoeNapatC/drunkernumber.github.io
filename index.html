@@ -16,7 +16,7 @@
     var target = Math.floor(Math.random() * 100);
     var current_selected = 0;
     function timerCheck(valselect) {
-      $("#mega-display").html('<div class="rainbow">'+valselect+'</div>');
+      $("#mega-display").html('<div class="msg-container"><div class="rainbow">'+valselect+'</div></div>');
       $("#mega-display").addClass("mega-show");
       current_selected = valselect;
       setTimeout(disable_numpad, 5000);
@@ -38,11 +38,11 @@
       console.log(select + ' | ' + target);
 
       if (target == select) {
-        $("#mega-display").html('<div onclick="resetGame()"  class="rainbow change-size"><p>นายแม่นมาก</p><button onclick="resetGame()" style="font-size:2vw !important;">เริ่มเกมใหม่</button></div>');
+        $("#mega-display").html('<div class="msg-container"><div onclick="resetGame()"  class="rainbow change-size"><p>นายแม่นมาก</p><button onclick="resetGame()" style="font-size:2vw !important;">เริ่มเกมใหม่</button></div></div>');
       }
       else if (select < target) {
         console.log('select < target');
-        $("#mega-display").html('<div class="rainbow change-size">ต่ำเกินไป</div>');
+        $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size">ต่ำเกินไป</div></div>');
         setTimeout(clearScr, 5000);        
         $("#contain-" + select).removeClass("rainbow");
         $("#pad-btn-" + select).removeClass("btn-txt-size");
@@ -54,7 +54,7 @@
         }
       }
       else if (select > target) {        
-        $("#mega-display").html('<div class="rainbow change-size">สูงเกินไป</div>');
+        $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size">สูงเกินไป</div></div>');
         setTimeout(clearScr, 5000);        
         console.log('select > target');
         $("#contain-" + select).removeClass("rainbow");
@@ -188,6 +188,12 @@
       100% {
         opacity: .5;
       }
+    }
+    .msg-container{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     .mega-display-container{
       background-color: rgba(255, 255, 255, 0.4);
