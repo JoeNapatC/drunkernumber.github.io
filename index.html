@@ -28,6 +28,7 @@
     const target = Math.floor(Math.random() * 100);
     var current_selected = 0;
     var selectedRule = "";
+    var timeout = null;
 
     const rules = [
       "ผู้หญิงหมดแก้ว",
@@ -90,10 +91,10 @@
     }
     function selectRule(ruleIndex) {
       openFullscreen();
-      $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size"><p>' + rules[ruleIndex] + '</p></div></div>');
+      $("#mega-display").html('<div class="msg-container" onclick="clearScr()"><div class="rainbow change-size"><p>' + rules[ruleIndex] + '</p></div></div>');
       selectedRule = rules[ruleIndex];
       $("#mega-display").addClass("show");
-      setTimeout(clearScr, 10000);
+      timeout = setTimeout(clearScr, 10000);
       $("#rule-container").addClass("no-show")
       displayNumpad();
     }
@@ -105,6 +106,7 @@
     }
 
     function clearScr() {
+      clearTimeout(timeout);
       $("#mega-display").removeClass("show");
     }
     function resetGame() {
@@ -145,8 +147,8 @@
         var ranIndex = Math.floor(Math.random() * belowWords.length);
         if (ranIndex >= belowWords.length) ranIndex = belowWords.length - 1;
         var belowWord = belowWords[ranIndex];
-        $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size"><p style="font-size: 12vw !important; color:red;">☒ ' + select + '</p>' + belowWord + '</div></div>');
-        setTimeout(clearScr, 5000);
+        $("#mega-display").html('<div class="msg-container" onclick="clearScr()"><div class="rainbow change-size" style="background-color:red;"><p style="font-size: 12vw !important; color:red;">☒ ' + select + '</p>' + belowWord + '</div></div>');
+        timeout = setTimeout(clearScr, 5000);
         $("#contain-" + select).removeClass("rainbow");
         $("#pad-btn-" + select).removeClass("btn-txt-size");
 
@@ -160,8 +162,8 @@
         var ranIndex = Math.floor(Math.random() * upperWords.length);
         if (ranIndex >= upperWords.length) ranIndex = upperWords.length - 1;
         var upperWord = upperWords[ranIndex];
-        $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size"><p style="font-size: 12vw !important; color:red;">☒ ' + select + '</p>' + upperWord + '</div></div>');
-        setTimeout(clearScr, 5000);
+        $("#mega-display").html('<div class="msg-container" onclick="clearScr()"><div class="rainbow change-size" style="background-color:red;"><p style="font-size: 12vw !important; color:red;">☒ ' + select + '</p>' + upperWord + '</div></div>');
+        timeout = setTimeout(clearScr, 5000);
         console.log('select > target');
         $("#contain-" + select).removeClass("rainbow");
         $("#pad-btn-" + select).removeClass("btn-txt-size");
