@@ -77,7 +77,7 @@
         const isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
         for (var i = pad_start; i <= pad_stop; i++) {
           if (isMobile) {
-            $("#game-numpad").append('<div id="contain-'+i+'" class="contain-btn"><button onclick="timerCheck(' + i + ')" type="button" id="pad-btn-' + i + '" class="btn btn-default btn-block mobile">' + i + '</button></div>');
+            $("#game-numpad").append('<div id="contain-'+i+'" class="contain-btn mobile"><button onclick="timerCheck(' + i + ')" type="button" id="pad-btn-' + i + '" class="btn btn-default btn-block ">' + i + '</button></div>');
             //...
           }
           else{
