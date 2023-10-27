@@ -15,6 +15,36 @@
     var pad_stop = 99;
     var target = Math.floor(Math.random() * 100);
     var current_selected = 0;
+    var winWords = ["ว้าว! คุณเลือกสุดยอดแล้ว!"
+,"เลขของคุณถูกต้องอย่างสิ้นเชิง!"
+, "คุณเป็นผู้เล่นสุดยอดที่เลือกถูก!"
+, "เลขที่คุณเลือกน่าประทับใจมาก!"
+, "ยินดีด้วย! คุณเลือกสุดยอดแล้ว."
+, "คุณเป็นผู้ชนะและเลือกถูกต้องเต็มที่!"
+, "สุดยอด! คุณจับเลขถูกได้อย่างลงตัว."
+, "เลือกค่าที่ถูกต้องอย่างมืออาชีพ!"
+, "คุณคือเกมเมอร์ที่เลือกสุดยอดแล้ว."
+, "เลขที่คุณเลือกเป็นสุดยอดที่สุด!"];
+    var upperWords = ["เลือกใหม่! ยังไม่ถูก และต่ำกว่านี้.",
+ "ยังไม่ถูก! ค่าที่คุณเลือกสูงกว่าเลขที่ถูกต้อง.",
+ "คุณต้องเลือกค่าที่ต่ำเพื่อที่จะถูก!",
+"เลขของคุณยังไม่ถูก มันต่ำกว่าเลขนี้.",
+ "เลือกค่าที่ต่ำลงเพื่อชนะในเกมนี้!",
+ "อุ๊ปส์! ค่าที่คุณเลือกยังไม่ถูก ต้องต่ำกว่านี้.",
+ "หาเลขที่ถูกและเลือกค่าที่ต่ำลงเถอะ!",
+ "เลือกใหม่! ยังไม่ถูก ต้องต่ำกว่านี้.",
+ "ค่าที่เลือกสูงไปเกินไปสำหรับจบเกมนี้.",
+ "เลือกค่าที่ต่ำกว่านี้ และพิสูจน์ว่าคุณเก่ง!"];
+    var belowWords  =["โอ๊ะ! ยังไม่ถูกและน้อยมาก!",
+"ว้าว! ค่าที่คุณเลือกยังไม่ถูก และต่ำมากเลย.",
+"เลือกใหม่! ยังไม่ถูก และต่ำเกินไปสำหรับเกมนี้.",
+"เลขของคุณยังไม่ถูก มันน้อยไปหน่อย.",
+"เลือกค่าที่น้อยเกินไปทำให้คุณไม่เป็นเก๋ๆในเกมนี้!",
+"อุ๊ปส์! ค่าที่คุณเลือกยังไม่ถูก และต่ำเกินไป.",
+,"หาเลขที่ถูกและเลือกค่าที่มากขึ้นเถอะ!"
+,"เลือกใหม่! ยังไม่ถูกและน้อยเกินไปสำหรับเกมนี้.",
+"ค่าที่เลือกน้อยเกินไปสำหรับจบเกมเจ๋งๆนี้."
+, "เลือกค่าต้องสูงกว่านี้ จะทำให้คุณเป็นจบเกมเก๋ๆ!"];
     function timerCheck(valselect) {
       $("#mega-display").html('<div class="msg-container"><div class="rainbow">'+valselect+'</div></div>');
       $("#mega-display").addClass("mega-show");
@@ -38,11 +68,13 @@
       console.log(select + ' | ' + target);
 
       if (target == select) {
-        $("#mega-display").html('<div class="msg-container"><div onclick="resetGame()"  class="rainbow change-size"><p>นายแม่นมาก</p><button onclick="resetGame()" style="font-size:2vw !important;">เริ่มเกมใหม่</button></div></div>');
+        var winword = winWords[Math.floor(Math.random() * 10)-1];
+        $("#mega-display").html('<div class="msg-container"><div onclick="resetGame()"  class="rainbow change-size"><p'+winword+'</p><button onclick="resetGame()" style="font-size:2vw !important;">เริ่มเกมใหม่</button></div></div>');
       }
       else if (select < target) {
         console.log('select < target');
-        $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size">ต่ำเกินไป</div></div>');
+        var belowWord = belowWords[Math.floor(Math.random() * 10)-1];
+        $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size">'+belowWord+'</div></div>');
         setTimeout(clearScr, 5000);        
         $("#contain-" + select).removeClass("rainbow");
         $("#pad-btn-" + select).removeClass("btn-txt-size");
@@ -53,8 +85,9 @@
           $("#pad-btn-" + i).css({ 'background-color': 'darkgrey' });     
         }
       }
-      else if (select > target) {        
-        $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size">สูงเกินไป</div></div>');
+      else if (select > target) {   
+        var upperWord = upperWords[Math.floor(Math.random() * 10)-1];
+        $("#mega-display").html('<div class="msg-container"><div class="rainbow change-size">'+upperWord+'</div></div>');
         setTimeout(clearScr, 5000);        
         console.log('select > target');
         $("#contain-" + select).removeClass("rainbow");
