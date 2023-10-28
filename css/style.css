@@ -1,0 +1,164 @@
+.btn-txt-size {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10vw;
+}
+
+.contain-btn {
+    font-family: 'Orbitron', sans-serif;
+    margin: 0px;
+    padding: 5px;
+    /*background-color: darkgrey;*/
+    width: 9vw;
+    max-height: 9vw;
+    height: 8vh;
+    display: inline-flex;
+    background-color: darkgray;
+}
+
+.selected {
+    border: #d53e33 solid 1px;
+}
+
+.btn {
+    font-family: 'Orbitron', sans-serif;
+    height: 100%;
+    background-color: #18c01e;
+    font-size: 2.5vw;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    font-weight: bold;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.change-size {
+    font-size: 5vw !important;
+}
+
+.mobile {
+    min-width: 40vw;
+    max-hight: 40vw;
+}
+
+.rainbow {
+    position: relative;
+    font-family: 'Orbitron', sans-serif;
+    z-index: 0;
+    width: 50vw;
+    max-height: 50vw;
+    height: 50vh;
+    font-size: 20vw;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 2rem;
+    text-align: center;
+
+    &::before {
+        content: '';
+        position: absolute;
+        z-index: -2;
+        left: -50%;
+        top: -50%;
+        width: 200%;
+        height: 200%;
+        background-color: #399953;
+        background-repeat: no-repeat;
+        background-size: 50% 50%, 50% 50%;
+        background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+        background-image: linear-gradient(#399953, #399953), linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33), linear-gradient(#377af5, #377af5);
+        animation: rotate 4s linear infinite;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 6px;
+        top: 6px;
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
+        background: white;
+        border-radius: 5px;
+        animation: opacityChange 3s infinite alternate;
+    }
+}
+
+@keyframes opacityChange {
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .5;
+    }
+}
+
+.msg-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mega-display-container {
+    background-color: rgba(255, 255, 255, 0.4);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.no-show {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.main {
+    margin: 0px;
+    padding: 20px;
+    width: 100vw;
+    height: 100vh;
+    overflow: scroll;
+}
+
+.game-numpad {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90vw;
+    height: 90vh;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.rule-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90vw;
+    height: 90vh;
+    padding: 20px;
+    z-index: 300;
+    transform: translate(-50%, -50%);
+}
