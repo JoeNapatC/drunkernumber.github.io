@@ -24,7 +24,7 @@
     height: 100%;
     background-color: #18c01e;
     font-size: 2.5vw;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .btn:hover {
@@ -44,7 +44,7 @@
 }
 
 .change-size {
-    font-size: 5vw !important;
+    font-size: 4vw !important;
 }
 
 .mobile {
@@ -126,6 +126,15 @@
     display: none;
 }
 
+.mega-text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    z-index: 900;
+    transform: translate(-50%, -50%);
+}
+
 .no-show {
     display: none;
 }
@@ -139,7 +148,7 @@
     padding: 20px;
     width: 100vw;
     height: 100vh;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .game-numpad {
@@ -152,7 +161,7 @@
     display: none;
 }
 
-.rule-container {
+.rule-section {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -162,3 +171,40 @@
     z-index: 300;
     transform: translate(-50%, -50%);
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+@keyframes strike {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+.strike {
+    position: relative;
+}
+
+.strike::after {
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: black;
+    animation-name: strike;
+    animation-duration: 4s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; 
+  }

@@ -4,6 +4,7 @@ const target = Math.floor(Math.random() * 100);
 var current_selected = 0;
 var selectedRule = "";
 var timeout = null;
+var ruleTimeOut = null;
 
 const rules = [
   "ผู้หญิงหมดแก้ว",
@@ -78,9 +79,6 @@ function openFullscreen() {
 }
 
 function displayRule() {
-  $("#rule-container").html(
-    '<p  style="text-align: center;" class="change-size">****** เลือกกติกากันก่อนเลย ******</p>'
-  );
   for (var index = 0; index < rules.length; index++) {
     $("#rule-container").append(
       '<button onclick="selectRule(' +
@@ -91,24 +89,30 @@ function displayRule() {
     );
   }
 }
+
 function selectRule(ruleIndex) {
   openFullscreen();
   $("#mega-display").html(
-    '<div class="msg-container" onclick="clearScr()"><div class="rainbow change-size"><p>' +
+    '<div class="msg-container" onclick="clearTimerRule()"><div class="rainbow change-size"><p class="mega-text">' +
       rules[ruleIndex] +
       "</p></div></div>"
   );
   selectedRule = rules[ruleIndex];
   $("#mega-display").addClass("show");
   timeout = setTimeout(clearScr, 10000);
-  $("#rule-container").addClass("no-show");
-  displayNumpad();
+  ruleTimeOut = setTimeout(displayNumpad, 10000);
+  $("#rule-section").addClass("no-show");
+}
+function clearTimerRule(){
+    clearScr();
+    clearTimeout(ruleTimeOut);
+    displayNumpad();
 }
 function timerCheck(valSelected) {
   $("#mega-display").html(
-    '<div class="msg-container" onclick="disable_numpad()"><div class="rainbow">' +
+    '<div class="msg-container" onclick="disable_numpad()"><div class="rainbow"><p class="mega-text">' +
       valSelected +
-      "</div></div>"
+      "</p></div></div>"
   );
   $("#mega-display").addClass("show");
   current_selected = valSelected;
@@ -169,17 +173,13 @@ function disable_numpad() {
   console.log("disable numpad call");
   var select = parseInt(current_selected);
   console.log(select + " | " + target);
-  //$("#pad-btn-" + select).addClass("selected");
   if (target == select) {
-    //var ranIndex = Math.floor(Math.random() * winWords.length);
-    //if (ranIndex >= winWords.length) ranIndex = winWords.length - 1;
-    //var winWord = winWords[ranIndex];
     $("#mega-display").html(
-      '<div class="msg-container"><div onclick="resetGame()"  class="rainbow change-size"><p style="font-size: 12vw !important">☑ ' +
+      '<div class="msg-container"><div onclick="resetGame()"  class="rainbow change-size"><div class="mega-text"><p style="font-size: 10vw !important">☑ ' +
         select +
         "</p><p>" +
         selectedRule +
-        '</p><button onclick="resetGame()" style="font-size:2vw !important;">เริ่มเกมใหม่</button></div></div>'
+        '</p><button onclick="resetGame()" style="font-size:2vw !important;">เริ่มเกมใหม่</button></div></div></div>'
     );
   } else if (select < target) {
     console.log("select < target");
@@ -187,11 +187,11 @@ function disable_numpad() {
     if (ranIndex >= belowWords.length) ranIndex = belowWords.length - 1;
     var belowWord = belowWords[ranIndex];
     $("#mega-display").html(
-      '<div class="msg-container" onclick="clearScr()"><div class="rainbow change-size" style="background-color:red;"><p style="font-size: 12vw !important; color:red;">☒ ' +
+      '<div class="msg-container" onclick="clearScr()"><div class="rainbow change-size" style="background-color:red;"><div class="mega-text"><p style="font-size: 10vw !important; color:red;">☒ ' +
         select +
         "</p>" +
         belowWord +
-        "</div></div>"
+        "</div></div></div>"
     );
     timeout = setTimeout(clearScr, 5000);
     $("#contain-" + select).removeClass("rainbow");
@@ -201,17 +201,18 @@ function disable_numpad() {
       console.log("disable numpad " + i);
       $("#pad-btn-" + i).prop("disabled", true);
       $("#pad-btn-" + i).css({ "background-color": "darkgrey" });
+      $("#pad-btn-" + i).addClass("strike");
     }
   } else if (select > target) {
     var ranIndex = Math.floor(Math.random() * upperWords.length);
     if (ranIndex >= upperWords.length) ranIndex = upperWords.length - 1;
     var upperWord = upperWords[ranIndex];
     $("#mega-display").html(
-      '<div class="msg-container" onclick="clearScr()"><div class="rainbow change-size" style="background-color:red;"><p style="font-size: 12vw !important; color:red;">☒ ' +
+      '<div class="msg-container" onclick="clearScr()"><div class="rainbow change-size" style="background-color:red;"><div class="mega-text"><p style="font-size: 10vw !important; color:red;">☒ ' +
         select +
         "</p>" +
         upperWord +
-        "</div></div>"
+        "</div></div></div>"
     );
     timeout = setTimeout(clearScr, 5000);
     console.log("select > target");
@@ -221,6 +222,7 @@ function disable_numpad() {
       console.log("disable numpad " + i);
       $("#pad-btn-" + i).prop("disabled", true);
       $("#pad-btn-" + i).css({ "background-color": "darkgray" });
+      $("#pad-btn-" + i).addClass("strike");
     }
   } else {
     console.log("disable numpad nothing");
